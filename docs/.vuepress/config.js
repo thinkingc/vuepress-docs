@@ -34,12 +34,39 @@ module.exports = {
     lastUpdated: false,
     nav: [
       {
-        text: 'Guide',
+        text: '前端三剑客',
         link: '/guide/',
+        items: [
+          { text: 'Chinese', link: '/language/chinese/' },
+          { text: 'Japanese', link: '/language/japanese/' }
+        ]
       },
       {
-        text: 'Config',
-        link: '/config/'
+        text: '前端框架',
+        link: '/config/',
+        ariaLabel: 'Language Menu',
+        items: [
+          { text: 'Vue', link: '/language/chinese/' },
+          { text: 'React', link: '/language/japanese/' }
+        ]
+      },
+      {
+        text: '算法与数据结构',
+        link: '/config/',
+        ariaLabel: 'Language Menu',
+        items: [
+          { text: '算法', link: '/language/chinese/' },
+          { text: '数据结构', link: '/language/japanese/' }
+        ]
+      },
+      {
+        text: '网络',
+        link: '/config/',
+        ariaLabel: 'Language Menu',
+        items: [
+          { text: 'Chinese', link: '/language/chinese/' },
+          { text: 'Japanese', link: '/language/japanese/' }
+        ]
       },
       {
         text: 'VuePress',
