@@ -34,39 +34,45 @@ module.exports = {
     lastUpdated: false,
     nav: [
       {
-        text: '前端三剑客',
-        link: '/guide/',
+        text: '前端基础',
+        link: '/base/',
         items: [
-          { text: 'Chinese', link: '/language/chinese/' },
-          { text: 'Japanese', link: '/language/japanese/' }
+          { text: 'HTML', link: '/base/html/' },
+          { text: 'CSS', link: '/base/css/' },
+          { text: 'JavaScript', link: '/base/js/' },
+          { text: 'TypeScript', link: '/base/ts/' }
         ]
       },
       {
         text: '前端框架',
-        link: '/config/',
+        link: '/frame/',
         ariaLabel: 'Language Menu',
         items: [
-          { text: 'Vue', link: '/language/chinese/' },
-          { text: 'React', link: '/language/japanese/' }
+          { text: 'Vue', link: '/frame/vue/' },
+          { text: 'React', link: '/frame/react/' }
         ]
       },
       {
         text: '算法与数据结构',
-        link: '/config/',
+        link: '/arithmetic/',
         ariaLabel: 'Language Menu',
         items: [
-          { text: '算法', link: '/language/chinese/' },
-          { text: '数据结构', link: '/language/japanese/' }
+          { text: '算法', link: '/arithmetic/arithmetic/' },
+          { text: '数据结构', link: '/arithmetic/japanese/' }
         ]
       },
       {
-        text: '网络',
-        link: '/config/',
+        text: '设计模式',
+        link: '/design/',
         ariaLabel: 'Language Menu',
-        items: [
-          { text: 'Chinese', link: '/language/chinese/' },
-          { text: 'Japanese', link: '/language/japanese/' }
-        ]
+      },
+      {
+        text: '网络',
+        link: '/network/',
+      },
+      {
+        text: 'Linux',
+        link: '/linux/',
       },
       {
         text: 'VuePress',
@@ -74,9 +80,9 @@ module.exports = {
       }
     ],
     sidebar: {
-      '/guide/': [
+      '/base/': [
         {
-          title: 'Guide',
+          title: 'base',
           collapsable: false,
           children: [
             '',
