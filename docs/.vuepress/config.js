@@ -20,11 +20,11 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Thinkingc',
+  title: 'Document Library',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
-  description: 'description',
+  description: '前端学习资料整理',
 
   /**
    * Extra tags to be injected to the page HTML `<head>`
