@@ -1,4 +1,20 @@
-const { description } = require('../../package')
+const sidebar = {
+  js: [{
+    title: '基础',
+    collapsable: false,
+    children: [
+      '/js/',
+    ]
+  }],
+  vue: [{
+    title: '面试题',
+    collapsable: false,
+    children: [
+      '/vue/',
+      '/vue/vue-set-theory'
+    ]
+  }],
+}
 
 module.exports = {
   /**
@@ -8,7 +24,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
-  description: description,
+  description: 'description',
 
   /**
    * Extra tags to be injected to the page HTML `<head>`
@@ -16,6 +32,7 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/config/#head
    */
   head: [
+    ['link', { rel: 'icon', href: '/logo.png' }],
     ['meta', { name: 'theme-color', content: '#3eaf7c' }],
     ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
     ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black' }]
@@ -35,30 +52,25 @@ module.exports = {
     nav: [
       {
         text: '前端基础',
-        link: '/base/',
         items: [
-          { text: 'HTML', link: '/base/html/' },
-          { text: 'CSS', link: '/base/css/' },
-          { text: 'JavaScript', link: '/base/js/' },
-          { text: 'TypeScript', link: '/base/ts/' }
+          { text: 'JavaScript', link: '/js/' },
+          { text: 'TypeScript', link: '/ts/' }
         ]
       },
       {
         text: '前端框架',
-        link: '/frame/',
         ariaLabel: 'Language Menu',
         items: [
-          { text: 'Vue', link: '/frame/vue/' },
-          { text: 'React', link: '/frame/react/' }
+          { text: 'Vue', link: '/vue/' },
+          { text: 'React', link: '/react/' }
         ]
       },
       {
         text: '算法与数据结构',
-        link: '/arithmetic/',
         ariaLabel: 'Language Menu',
         items: [
-          { text: '算法', link: '/arithmetic/arithmetic/' },
-          { text: '数据结构', link: '/arithmetic/japanese/' }
+          { text: '算法', link: '/arithmetic/' },
+          { text: '数据结构', link: '/data-structure/' }
         ]
       },
       {
@@ -79,17 +91,13 @@ module.exports = {
         link: 'https://v1.vuepress.vuejs.org'
       }
     ],
+    sidebarDepth: 2,
     sidebar: {
-      '/base/': [
-        {
-          title: 'base',
-          collapsable: false,
-          children: [
-            '',
-            'using-vue',
-          ]
-        }
-      ],
+      collapsable: false,
+      '/js/': sidebar.js,
+      '/ts/': sidebar.js,
+      '/vue/': sidebar.vue,
+      '/react/': sidebar.react,
     }
   },
 
