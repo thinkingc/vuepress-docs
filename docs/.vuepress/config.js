@@ -20,7 +20,7 @@ module.exports = {
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#title
    */
-  title: 'Document Library',
+  title: 'Front-End Document',
   /**
    * Ref：https://v1.vuepress.vuejs.org/config/#description
    */
@@ -44,11 +44,16 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
-    repo: '',
-    editLinks: false,
-    docsDir: '',
+    repo: 'https://github.com/thinkingc/vuepress-docs.git',
+    editLinks: true,
+    docsDir: 'docs',
+    // 假如你的文档仓库和项目本身不在一个仓库：
+    docsRepo: 'https://github.com/thinkingc/vuepress-docs',
+    // 默认是 false, 设置为 true 来启用
+    editLinks: true,
+    // 默认为 "Edit this page"
     editLinkText: '',
-    lastUpdated: false,
+    lastUpdated: true,
     nav: [
       {
         text: '前端基础',
@@ -101,11 +106,15 @@ module.exports = {
     }
   },
 
+  smoothScroll: true,
+
   /**
    * Apply plugins，ref：https://v1.vuepress.vuejs.org/zh/plugin/
    */
   plugins: [
     '@vuepress/plugin-back-to-top',
     '@vuepress/plugin-medium-zoom',
+    '@vuepress/nprogress',
+    '@vuepress/last-updated',
   ]
 }

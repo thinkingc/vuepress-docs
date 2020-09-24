@@ -128,8 +128,8 @@ if (Array.isArray(target) && isValidArrayIndex(key)) {
 }
 ```
 这里实际就是修改数组时调用 `set` 方法，然后让我们能够触发响应部分的代码。不过在分析这段代码之前我们来看看vue中数组改变是如何触发视图更新的。下图分别是vue中的数组和普通的js数组：
-![vue-array-proto](images/vue-array-proto.png)
-![array-proto](images/array-proto.png)
+![vue-array-proto](./images/vue-array-proto.png)
+![array-proto](./images/array-proto.png)
 源码位置：
 ```js
 import { def } from '../util/index'
@@ -236,6 +236,11 @@ return val
 
 ob.dep.notify()这句代码的意思是触发当前的依赖（这里的依赖依然可以理解成渲染函数），所以页面就会进行重新渲染。  
 
+## 总结
+- 如果目标是数组，使用 vue 实现的变异方法 `splice` 实现响应式
+- 如果目标是对象，判断属性存在，即为响应式，直接赋值
+- 如果 target 本身就不是响应式，直接赋值
+- 如果属性不是响应式，则调用 `defineReactive` 方法进行响应式处理
 
 参考：  
 [Vue源码: 关于vm.$set()内部原理](https://juejin.im/post/6844903830837002253)   
