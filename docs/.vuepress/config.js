@@ -64,7 +64,7 @@ module.exports = {
     editLinks: true,
     // 默认为 "Edit this page"
     editLinkText: '',
-    lastUpdated: false,
+    lastUpdated: true,
     nav: [
       {
         text: '前端基础',
