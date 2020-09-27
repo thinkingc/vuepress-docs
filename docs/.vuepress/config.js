@@ -1,19 +1,30 @@
 const sidebar = {
-  js: [{
-    title: '基础',
-    collapsable: false,
-    children: [
-      '/js/',
-    ]
-  }],
-  vue: [{
-    title: '面试题',
-    collapsable: false,
-    children: [
-      '/vue/',
-      '/vue/vue-set-theory'
-    ]
-  }],
+  js: [
+    {
+      title: '基础',
+      collapsable: false,
+      children: [
+        '/js/',
+      ]
+    },
+    {
+      title: '面试题',
+      collapsable: false,
+      children: [
+        '/js/interview/is-array',
+      ]
+    }
+  ],
+  vue: [
+    {
+      title: '面试题',
+      collapsable: false,
+      children: [
+        '/vue/',
+        '/vue/vue-set-theory'
+      ]
+    }
+  ],
 }
 
 module.exports = {
@@ -53,7 +64,7 @@ module.exports = {
     editLinks: true,
     // 默认为 "Edit this page"
     editLinkText: '',
-    lastUpdated: true,
+    lastUpdated: false,
     nav: [
       {
         text: '前端基础',
@@ -87,16 +98,17 @@ module.exports = {
         text: '网络',
         link: '/network/',
       },
-      {
-        text: 'Linux',
-        link: '/linux/',
-      },
-      {
-        text: 'VuePress',
-        link: 'https://v1.vuepress.vuejs.org'
-      }
+      // {
+      //   text: '浏览器',
+      //   link: '/browser/',
+      // },
+      // {
+      //   text: 'VuePress',
+      //   link: 'https://v1.vuepress.vuejs.org'
+      // }
     ],
     sidebarDepth: 2,
+    // 
     sidebar: {
       collapsable: false,
       '/js/': sidebar.js,

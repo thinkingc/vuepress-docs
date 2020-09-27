@@ -1,3 +1,3 @@
 # JavaScript Introduction
 
-## Happy Study
+## 
