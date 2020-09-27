@@ -63,8 +63,8 @@ module.exports = {
     // 默认是 false, 设置为 true 来启用
     editLinks: true,
     // 默认为 "Edit this page"
-    editLinkText: '',
-    lastUpdated: true,
+    editLinkText: '在 GitHub 上编辑此页',
+    lastUpdated: '上次更新',
     nav: [
       {
         text: '前端基础',
