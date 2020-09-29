@@ -47,7 +47,8 @@ console.log(s instanceof Person); //true
 // 解释：A instanceof C 等价于 A 是否是 C子类，或者后代？
 ```
 
-`f instanceof Foo` **判断逻辑是：`f` 的 `__proto__` 一层一层往上，能否对应到 `Foo.prototype`。**  
+### `instanceof` 实现
+`f instanceof Foo` 判断逻辑是：**`f` 的 `__proto__` 一层一层往上，能否对应到 `Foo.prototype`。**  
 
 判断逻辑翻译成js代码如下：  
 ```js
