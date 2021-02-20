@@ -1,3 +1,4 @@
+// 定义每一篇文章的 url，children值和文件路径对应。
 const sidebar = {
   js: [
     {
@@ -12,6 +13,22 @@ const sidebar = {
       collapsable: false,
       children: [
         '/js/interview/is-array',
+      ]
+    }
+  ],
+  ts: [
+    {
+      title: '基础',
+      collapsable: false,
+      children: [
+        '/ts/',
+      ]
+    },
+    {
+      title: '面试题',
+      collapsable: false,
+      children: [
+        '/ts/interview/interface-type',
       ]
     }
   ],
@@ -108,11 +125,11 @@ module.exports = {
       // }
     ],
     sidebarDepth: 2,
-    // 
+    // 定义侧边栏入口
     sidebar: {
       collapsable: false,
       '/js/': sidebar.js,
-      '/ts/': sidebar.js,
+      '/ts/': sidebar.ts,
       '/vue/': sidebar.vue,
       '/react/': sidebar.react,
     }

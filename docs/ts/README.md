@@ -1,7 +1,3 @@
----
-sidebar: true
----
-
 # Config
 
 ## foo
