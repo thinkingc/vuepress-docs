@@ -143,6 +143,7 @@ module.exports = {
       '/ts/': sidebar.ts,
       '/vue/': sidebar.vue,
       '/react/': sidebar.react,
+      '/arithmetic/': sidebar.arithmetic,
     }
   },
 
