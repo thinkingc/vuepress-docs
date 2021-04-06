@@ -38,7 +38,18 @@ const sidebar = {
       collapsable: false,
       children: [
         '/vue/',
-        '/vue/vue-set-theory'
+        '/vue/interview-2021',
+        '/vue/vue-set'
+      ]
+    }
+  ],
+  arithmetic: [
+    {
+      title: '前端算法题库',
+      collapsable: false,
+      children: [
+        '/arithmetic/',
+        '/arithmetic/fe/is-reverse-string'
       ]
     }
   ],
