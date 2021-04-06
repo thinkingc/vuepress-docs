@@ -4,7 +4,13 @@
 set -e
 
 git add .
-git commit -m 'document commit'
+
+if [ $1 != '' ]
+then
+  git commit -m $1
+else
+  git commit -m 'document commit'
+fi
 
 # 如果发布到 https://<USERNAME>.github.io  填写你刚刚创建的仓库地址
 git push -f https://github.com/thinkingc/vuepress-docs.git master
