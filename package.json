@@ -12,7 +12,7 @@
     "dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "deploy": "bash deploy.sh",
-    "push": "bash gitpush.sh --i"
+    "push": "bash gitpush.sh"
   },
   "license": "MIT",
   "devDependencies": {
