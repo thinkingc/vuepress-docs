@@ -49,10 +49,21 @@ const sidebar = {
       collapsable: false,
       children: [
         '/arithmetic/',
-        '/arithmetic/fe/is-reverse-string'
+        '/arithmetic/fe/is-reverse-string',
+        '/arithmetic/fe/fibonacci',
       ]
     }
   ],
+  network: [
+    {
+      title: '面试题',
+      collapsable: false,
+      children: [
+        '/network/',
+        '/network/sso'
+      ]
+    }
+  ]
 }
 
 module.exports = {
@@ -123,7 +134,7 @@ module.exports = {
         ariaLabel: 'Language Menu',
       },
       {
-        text: '网络',
+        text: '网络和浏览器',
         link: '/network/',
       },
       // {
@@ -144,6 +155,7 @@ module.exports = {
       '/vue/': sidebar.vue,
       '/react/': sidebar.react,
       '/arithmetic/': sidebar.arithmetic,
+      '/network/': sidebar.network
     }
   },
 
