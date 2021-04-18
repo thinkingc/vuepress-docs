@@ -43,6 +43,16 @@ const sidebar = {
       ]
     }
   ],
+  react: [
+    {
+      title: '面试题',
+      collapsable: false,
+      children: [
+        '/react/',
+        '/react/react17-changelog',
+      ]
+    }
+  ],
   arithmetic: [
     {
       title: '前端算法题库',
