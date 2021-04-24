@@ -1,6 +1,6 @@
 # JS 手写题
 
-### 防抖
+## 防抖
 ```js
 function debounce(fn, delay) {
   var timer = null
@@ -14,7 +14,7 @@ function debounce(fn, delay) {
 }
 ```
 
-### 节流
+## 节流
 ```js
 // 基础版1：时间戳（第一次触发会执行，但不排除不执行的可能）
 function throttle(fn, delay) {
@@ -62,7 +62,7 @@ function throttle(fn, delay) {
 }
 ```
 
-### apply
+## apply
 ```js
 // 方式1
 function apply(fn, context, arr) {
@@ -87,7 +87,7 @@ Function.prototype.myApply = function(context, arr) {
 }
 ```
 
-### call
+## call
 ```js
 Function.prototype.myCall = function(context, ...rest) {
   var result
@@ -98,7 +98,7 @@ Function.prototype.myCall = function(context, ...rest) {
 }
 ```
 
-### bind
+## bind
 ```js
 Function.prototype.myBind = function(context, ...args0) {
   var originFn = this
@@ -167,7 +167,7 @@ Function.prototype.bindFn = function bind(thisArg){
 }
 ```
 
-### 实现 new
+## 实现 new
 ```js
 function myNew(fn, ...args) {
   // 1. 生成新对象，并绑定原型
@@ -179,7 +179,7 @@ function myNew(fn, ...args) {
 }
 ```
 
-### 深拷贝
+## 深拷贝
 ```js
 // 基础版
 function deepClone(origin) {

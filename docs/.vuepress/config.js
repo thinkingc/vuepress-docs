@@ -13,6 +13,7 @@ const sidebar = {
       collapsable: false,
       children: [
         '/js/interview/is-array',
+        '/js/interview/js-coding'
       ]
     }
   ],
