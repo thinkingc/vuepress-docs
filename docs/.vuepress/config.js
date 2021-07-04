@@ -54,6 +54,17 @@ const sidebar = {
       ]
     }
   ],
+  npm: [
+    {
+      title: 'ast',
+      collapsable: true,
+      children: [
+        '/npm/ast/babel',
+        '/npm/ast/jscodeshift',
+        '/npm/ast/recast',
+      ]
+    },
+  ],
   arithmetic: [
     {
       title: '前端算法题库',
@@ -128,7 +139,8 @@ module.exports = {
         ariaLabel: 'Language Menu',
         items: [
           { text: 'Vue', link: '/vue/' },
-          { text: 'React', link: '/react/' }
+          { text: 'React', link: '/react/' },
+          { text: 'npm', link: '/npm/' },
         ]
       },
       {
@@ -165,6 +177,7 @@ module.exports = {
       '/ts/': sidebar.ts,
       '/vue/': sidebar.vue,
       '/react/': sidebar.react,
+      '/npm/': sidebar.npm,
       '/arithmetic/': sidebar.arithmetic,
       '/network/': sidebar.network
     }
