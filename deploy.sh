@@ -10,7 +10,7 @@ npm run docs:build
 cd docs/.vuepress/dist
 
 # 新设备时必须
-# git init
+git init
 git add -A
 git commit -m 'deploy'
 
