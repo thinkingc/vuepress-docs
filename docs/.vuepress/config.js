@@ -64,6 +64,37 @@ const sidebar = {
         '/npm/ast/recast',
       ]
     },
+    {
+      title: 'node',
+      collapsable: true,
+      children: [
+        '/npm/node/dotenv',
+        '/npm/node/chalk',
+        '/npm/node/log-symbols',
+        '/npm/node/yargs',
+        '/npm/node/yargs-parser',
+        '/npm/node/glob',
+        '/npm/node/globby',
+        '/npm/node/ora',
+        '/npm/node/inquirer',
+        '/npm/node/commander',
+        '/npm/node/shell',
+        '/npm/node/download-git-repo',
+        '/npm/node/mkdirp',
+        '/npm/node/execa',
+        '/npm/node/semver',
+        '/npm/node/address',
+        '/npm/node/np',
+      ]
+    },
+    {
+      title: 'util',
+      collapsable: true,
+      children: [
+        '/npm/util/lerna',
+        '/npm/util/mustache',
+      ]
+    },
   ],
   arithmetic: [
     {
