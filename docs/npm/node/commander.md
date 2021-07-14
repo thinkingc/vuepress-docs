@@ -103,13 +103,12 @@ program
   .addCommand(build.makeBuildCommand());  
 ```
 
-
 ### 设置命令参数
 通过`.arguments`可以为最顶层命令指定命令参数，对子命令而言，参数都包括在`.command`调用之中了。尖括号（例如`<required>`）意味着必选，而方括号（例如`[optional]`）则代表可选。可以向`.description()`方法传递第二个参数，从而在帮助中展示命令参数的信息。该参数是一个包含了 “命令参数名称：命令参数描述” 键值对的对象。  
 ```js
 program
   .version('0.1.0')
-  .arguments('<username> [password]')
+  .arguments('<username> [password]')  // 和.command不同点：.arguments只有参数（<>、[]），没有自定义命令
   .description('test command', {
     username: 'user to login',
     password: 'password for user, if required'
