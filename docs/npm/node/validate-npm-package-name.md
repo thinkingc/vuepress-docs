@@ -1,0 +1,2 @@
+# validate-npm-package-name
+

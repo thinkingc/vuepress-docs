@@ -77,14 +77,21 @@ const sidebar = {
         '/npm/node/globby',
         '/npm/node/ora',
         '/npm/node/inquirer',
+        '/npm/node/prompts',
         '/npm/node/commander',
         '/npm/node/shell',
+        '/npm/node/cross-spawn',
         '/npm/node/download-git-repo',
         '/npm/node/mkdirp',
         '/npm/node/execa',
+        '/npm/node/got',
+        '/npm/node/hyperquest',
         '/npm/node/semver',
         '/npm/node/address',
+        '/npm/node/tar-pack',
+        '/npm/node/tmp',
         '/npm/node/np',
+        '/npm/node/validate-npm-package-name',
       ]
     },
     {
@@ -93,6 +100,15 @@ const sidebar = {
       children: [
         '/npm/util/lerna',
         '/npm/util/mustache',
+        '/npm/util/lru',
+      ]
+    },
+    {
+      title: 'time',
+      collapsable: true,
+      children: [
+        '/npm/time/dayjs',
+        '/npm/time/moment',
       ]
     },
   ],
@@ -224,5 +240,11 @@ module.exports = {
     '@vuepress/plugin-medium-zoom',
     '@vuepress/nprogress',
     '@vuepress/last-updated',
+    ['vuepress-plugin-code-copy', {
+      align: 'bottom',
+      color: '#27b1ff',
+      backgroundColor: '#0075b8',
+      successText: 'Copied!',
+    }],
   ]
 }
