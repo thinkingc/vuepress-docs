@@ -5,7 +5,7 @@ set -e
 
 git add .
 echo 100
-echo $1
+echo $1 != ''
 if [ $1 != '' ]
 then
   git commit -m $1 # bash gipush.sh xxx
