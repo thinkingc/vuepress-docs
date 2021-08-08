@@ -13,7 +13,7 @@ else
 fi
 
 # 如果发布到 https://<USERNAME>.github.io  填写你刚刚创建的仓库地址
-# git push -f https://github.com/thinkingc/vuepress-docs.git master
-git push -f git@github.com:thinkingc/vuepress-docs.git master
+git push -f https://github.com/thinkingc/vuepress-docs.git master
+# git push -f git@github.com:thinkingc/vuepress-docs.git master
 
 cd -
