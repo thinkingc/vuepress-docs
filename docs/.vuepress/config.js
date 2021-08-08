@@ -70,7 +70,6 @@ const sidebar = {
       children: [
         '/npm/node/dotenv',
         '/npm/node/chalk',
-        '/npm/node/log-symbols',
         '/npm/node/yargs',
         '/npm/node/yargs-parser',
         '/npm/node/glob',
@@ -79,7 +78,7 @@ const sidebar = {
         '/npm/node/inquirer',
         '/npm/node/prompts',
         '/npm/node/commander',
-        '/npm/node/shell',
+        '/npm/node/shelljs',
         '/npm/node/cross-spawn',
         '/npm/node/download-git-repo',
         '/npm/node/mkdirp',
@@ -87,18 +86,22 @@ const sidebar = {
         '/npm/node/got',
         '/npm/node/hyperquest',
         '/npm/node/semver',
+        '/npm/node/log-symbols',
+        '/npm/node/metalsmith',
+        '/npm/node/marked',
+        '/npm/node/marked-terminal',
         '/npm/node/address',
         '/npm/node/tar-pack',
         '/npm/node/tmp',
-        '/npm/node/np',
+        '/npm/node/rimraf',
         '/npm/node/validate-npm-package-name',
+        '/npm/node/np',
       ]
     },
     {
       title: 'util',
       collapsable: true,
       children: [
-        '/npm/util/lerna',
         '/npm/util/mustache',
         '/npm/util/lru',
       ]
@@ -111,6 +114,16 @@ const sidebar = {
         '/npm/time/moment',
       ]
     },
+  ],
+  engineering: [
+    {
+      title: '前端工程化',
+      collapsable: false,
+      children: [
+        '/engineering/',
+        '/engineering/eslint',
+      ]
+    }
   ],
   arithmetic: [
     {
@@ -182,13 +195,17 @@ module.exports = {
         ]
       },
       {
-        text: '前端框架',
+        text: '前端库',
         ariaLabel: 'Language Menu',
         items: [
           { text: 'Vue', link: '/vue/' },
           { text: 'React', link: '/react/' },
           { text: 'npm', link: '/npm/' },
         ]
+      },
+      {
+        text: '工程化',
+        link: '/engineering/',
       },
       {
         text: '算法与数据结构',
@@ -199,13 +216,13 @@ module.exports = {
         ]
       },
       {
+        text: '网络和浏览器',
+        link: '/network/',
+      },
+      {
         text: '设计模式',
         link: '/design/',
         ariaLabel: 'Language Menu',
-      },
-      {
-        text: '网络和浏览器',
-        link: '/network/',
       },
       // {
       //   text: '浏览器',
@@ -226,7 +243,8 @@ module.exports = {
       '/react/': sidebar.react,
       '/npm/': sidebar.npm,
       '/arithmetic/': sidebar.arithmetic,
-      '/network/': sidebar.network
+      '/network/': sidebar.network,
+      '/engineering/': sidebar.engineering, 
     }
   },
 

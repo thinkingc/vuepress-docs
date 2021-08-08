@@ -30,6 +30,7 @@ Retreat from the xupptumblers!
 #### Complex Example
 ```js
 #!/usr/bin/env node
+// example.js
 
 const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers')
@@ -43,7 +44,7 @@ yargs(hideBin(process.argv))
       })
   }, (argv) => {
     if (argv.verbose) console.info(`start server on :${argv.port}`)
-    serve(argv.port)
+    console.log(argv.port)
   })
   .option('verbose', {
     alias: 'v',
@@ -52,5 +53,11 @@ yargs(hideBin(process.argv))
   })
   .argv
   ```
+```js
+node .example.js --port 3000 -v
 
-
+> start server on :3000
+> 3000
+```
+## 参考
+[yargs](https://github.com/yargs/yargs)

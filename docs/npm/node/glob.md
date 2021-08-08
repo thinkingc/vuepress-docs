@@ -1,0 +1,20 @@
+# glob
+> Match files using the patterns the shell uses, like stars and stuff.
+
+使用shell使用的模式匹配文件，如星号等。（可用`globby`代替）
+
+## 用法
+```js
+var glob = require("glob")
+
+// options is optional
+glob("**/*.js", options, function (er, files) {
+  // files is an array of filenames.
+  // If the `nonull` option is set, and nothing
+  // was found, then files is ["**/*.js"]
+  // er is an error object or null.
+})
+```
+
+## 参考
+[globby](https://github.com/isaacs/node-glob#readme)
