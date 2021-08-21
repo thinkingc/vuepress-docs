@@ -1,4 +1,4 @@
-# yargs-parse
+# yargs-parser
 > The mighty option parser used by yargs.
 
 解析命令行参数。（包大小比`yargs`小，功能也比较少，但够用！）

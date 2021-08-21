@@ -72,6 +72,7 @@ const sidebar = {
         '/npm/node/chalk',
         '/npm/node/yargs',
         '/npm/node/yargs-parser',
+        '/npm/node/minimist',
         '/npm/node/glob',
         '/npm/node/globby',
         '/npm/node/ora',

@@ -7,7 +7,9 @@
 `node`命令行的一些常用包。
 
 参考：  
-[自制脚手架](https://blog.csdn.net/weixin_43971794/article/details/103695555)
+[自制脚手架](https://blog.csdn.net/weixin_43971794/article/details/103695555)  
+[看了就会的 Node.js 常用三方工具包](https://mp.weixin.qq.com/s/2JQxsbh29mf2i9pWqnlJ2w)  
+[Node.js 的三个模块的基础 API](https://mp.weixin.qq.com/s/tB6axCDFiC5Cp_7tPGDkpQ)
 
 ## util
 一些常用的工具包。
