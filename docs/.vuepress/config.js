@@ -97,6 +97,9 @@ const sidebar = {
         '/npm/node/rimraf',
         '/npm/node/validate-npm-package-name',
         '/npm/node/np',
+        '/npm/node/get-port',
+        '/npm/node/tiny-warning',
+        '/npm/node/tiny-invariant',
       ]
     },
     {
