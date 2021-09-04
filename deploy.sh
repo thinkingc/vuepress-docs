@@ -11,6 +11,8 @@ cd docs/.vuepress/dist
 
 # 新设备时必须
 git init
+git config user.name "thinkingc"
+git config user.email "2407606301@qq.com"
 git add -A
 git commit -m 'deploy'
 
