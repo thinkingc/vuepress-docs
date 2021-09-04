@@ -9,9 +9,6 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 15.x]
     steps:
       # 切换到master分支
       - name: checkout
