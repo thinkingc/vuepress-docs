@@ -13,11 +13,17 @@ jobs:
       # 切换到master分支
       - name: checkout
         uses: actions/checkout@master
-      # 使用 node:10
+      # 使用 node: 12
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: '12.x'
+      # 安装
+      - name: npm install
+        run: npm install
+      # 构建
+      - name: npm build
+        run: npm run docs:build
       # 部署
       - name: deploy
         run: npm run deploy
