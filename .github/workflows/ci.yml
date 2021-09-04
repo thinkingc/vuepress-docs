@@ -1,27 +1,26 @@
-name: deplay
-
-env:
-  NODE_OPTIONS: --max-old-space-size=6144
+name: CI/CD Deplay
 
 on:
   push:
-    paths-ignore:
-      - '.github/**/*.md'
-      - 'examples/**'
-      - 'docs/**'
-      - '*.md'
+    branches:
+      - master
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node_version: [12.x, 14.x]
-        os: [ubuntu-latest, macos-latest, windows-latest]
-      fail-fast: false
+        node-version: [12.x, 14.x, 15.x]
     steps:
+      # 切换到master分支
       - uses: actions/checkout@master
+      # 使用 node:10
+      - name: Use Node.js
+      - uses: actions/setup-node@v1
         with:
-          fetch-depth: 0
+          node-version: '12.x'
+      # 部署
       - name: deploy
-      - run: npm run deploy
+        run: npm run deploy
+        env:
