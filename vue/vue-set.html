@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Vue.set 实现原理 | Front-End Document</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="https://v1.vuepress.vuejs.org/hero.png">
+    <meta name="description" content="前端学习资料整理">
+    <meta name="theme-color" content="#3eaf7c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="preload" href="/assets/css/0.styles.5fcb19ae.css" as="style"><link rel="preload" href="/assets/js/app.665f0418.js" as="script"><link rel="preload" href="/assets/js/2.60e7a54a.js" as="script"><link rel="preload" href="/assets/js/6.d0148cec.js" as="script"><link rel="prefetch" href="/assets/js/10.76704eed.js"><link rel="prefetch" href="/assets/js/11.a5b3a6b9.js"><link rel="prefetch" href="/assets/js/12.3d20ea8d.js"><link rel="prefetch" href="/assets/js/13.a0c75b6e.js"><link rel="prefetch" href="/assets/js/14.a4e20bd4.js"><link rel="prefetch" href="/assets/js/15.1c38fbba.js"><link rel="prefetch" href="/assets/js/16.f12c65ec.js"><link rel="prefetch" href="/assets/js/17.0b639443.js"><link rel="prefetch" href="/assets/js/18.d4f4a804.js"><link rel="prefetch" href="/assets/js/19.8416748b.js"><link rel="prefetch" href="/assets/js/20.07e9f1a8.js"><link rel="prefetch" href="/assets/js/21.59016129.js"><link rel="prefetch" href="/assets/js/22.36714ac4.js"><link rel="prefetch" href="/assets/js/23.cb3abdb6.js"><link rel="prefetch" href="/assets/js/24.04c04172.js"><link rel="prefetch" href="/assets/js/25.426c4c03.js"><link rel="prefetch" href="/assets/js/26.4bbcac86.js"><link rel="prefetch" href="/assets/js/27.a4623d72.js"><link rel="prefetch" href="/assets/js/28.c810e4da.js"><link rel="prefetch" href="/assets/js/29.d9f67cdc.js"><link rel="prefetch" href="/assets/js/3.b33b094d.js"><link rel="prefetch" href="/assets/js/30.db0001b3.js"><link rel="prefetch" href="/assets/js/31.463facbb.js"><link rel="prefetch" href="/assets/js/32.bd014731.js"><link rel="prefetch" href="/assets/js/33.d7bdf302.js"><link rel="prefetch" href="/assets/js/34.638ea6c9.js"><link rel="prefetch" href="/assets/js/35.5da57a61.js"><link rel="prefetch" href="/assets/js/36.af881759.js"><link rel="prefetch" href="/assets/js/37.467eb5ed.js"><link rel="prefetch" href="/assets/js/38.ba976afd.js"><link rel="prefetch" href="/assets/js/39.9d7f3656.js"><link rel="prefetch" href="/assets/js/4.b0172051.js"><link rel="prefetch" href="/assets/js/40.f4d5b3a3.js"><link rel="prefetch" href="/assets/js/41.df438f9a.js"><link rel="prefetch" href="/assets/js/42.53576110.js"><link rel="prefetch" href="/assets/js/43.5bd11565.js"><link rel="prefetch" href="/assets/js/44.a363a128.js"><link rel="prefetch" href="/assets/js/45.74571077.js"><link rel="prefetch" href="/assets/js/46.ded8f03e.js"><link rel="prefetch" href="/assets/js/47.3fcada10.js"><link rel="prefetch" href="/assets/js/48.8fb1d30c.js"><link rel="prefetch" href="/assets/js/49.f8aec0bc.js"><link rel="prefetch" href="/assets/js/5.a07e3c17.js"><link rel="prefetch" href="/assets/js/50.7219a33f.js"><link rel="prefetch" href="/assets/js/51.64f147df.js"><link rel="prefetch" href="/assets/js/52.744f0085.js"><link rel="prefetch" href="/assets/js/53.8c41f115.js"><link rel="prefetch" href="/assets/js/54.7cb693a1.js"><link rel="prefetch" href="/assets/js/55.0f1d4066.js"><link rel="prefetch" href="/assets/js/56.2fb3e53f.js"><link rel="prefetch" href="/assets/js/57.aed2f791.js"><link rel="prefetch" href="/assets/js/58.7f13d9f4.js"><link rel="prefetch" href="/assets/js/59.9def58fb.js"><link rel="prefetch" href="/assets/js/60.f65a037d.js"><link rel="prefetch" href="/assets/js/61.e27629e6.js"><link rel="prefetch" href="/assets/js/62.b8c40245.js"><link rel="prefetch" href="/assets/js/63.73f0331a.js"><link rel="prefetch" href="/assets/js/64.471085e4.js"><link rel="prefetch" href="/assets/js/65.d525cc25.js"><link rel="prefetch" href="/assets/js/66.5e728643.js"><link rel="prefetch" href="/assets/js/67.ba909e41.js"><link rel="prefetch" href="/assets/js/68.f3f879fc.js"><link rel="prefetch" href="/assets/js/69.7ae3ca70.js"><link rel="prefetch" href="/assets/js/7.232a931f.js"><link rel="prefetch" href="/assets/js/70.3f090bce.js"><link rel="prefetch" href="/assets/js/8.cc022859.js"><link rel="prefetch" href="/assets/js/9.8df463da.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.5fcb19ae.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">Front-End Document</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端基础" class="dropdown-title"><span class="title">前端基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="前端基础" class="mobile-dropdown-title"><span class="title">前端基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/js/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/ts/" class="nav-link">
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Language Menu" class="dropdown-title"><span class="title">前端库</span> <span class="arrow down"></span></button> <button type="button" aria-label="Language Menu" class="mobile-dropdown-title"><span class="title">前端库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vue/" class="nav-link router-link-active">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/react/" class="nav-link">
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/npm/" class="nav-link">
+  npm
+</a></li></ul></div></div><div class="nav-item"><a href="/engineering/" class="nav-link">
+  工程化
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Language Menu" class="dropdown-title"><span class="title">算法与数据结构</span> <span class="arrow down"></span></button> <button type="button" aria-label="Language Menu" class="mobile-dropdown-title"><span class="title">算法与数据结构</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/arithmetic/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/data-structure/" class="nav-link">
+  数据结构
+</a></li></ul></div></div><div class="nav-item"><a href="/network/" class="nav-link">
+  网络和浏览器
+</a></div><div class="nav-item"><a href="/design/" class="nav-link">
+  设计模式
+</a></div> <a href="https://github.com/thinkingc/vuepress-docs.git" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="前端基础" class="dropdown-title"><span class="title">前端基础</span> <span class="arrow down"></span></button> <button type="button" aria-label="前端基础" class="mobile-dropdown-title"><span class="title">前端基础</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/js/" class="nav-link">
+  JavaScript
+</a></li><li class="dropdown-item"><!----> <a href="/ts/" class="nav-link">
+  TypeScript
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Language Menu" class="dropdown-title"><span class="title">前端库</span> <span class="arrow down"></span></button> <button type="button" aria-label="Language Menu" class="mobile-dropdown-title"><span class="title">前端库</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/vue/" class="nav-link router-link-active">
+  Vue
+</a></li><li class="dropdown-item"><!----> <a href="/react/" class="nav-link">
+  React
+</a></li><li class="dropdown-item"><!----> <a href="/npm/" class="nav-link">
+  npm
+</a></li></ul></div></div><div class="nav-item"><a href="/engineering/" class="nav-link">
+  工程化
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="Language Menu" class="dropdown-title"><span class="title">算法与数据结构</span> <span class="arrow down"></span></button> <button type="button" aria-label="Language Menu" class="mobile-dropdown-title"><span class="title">算法与数据结构</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/arithmetic/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/data-structure/" class="nav-link">
+  数据结构
+</a></li></ul></div></div><div class="nav-item"><a href="/network/" class="nav-link">
+  网络和浏览器
+</a></div><div class="nav-item"><a href="/design/" class="nav-link">
+  设计模式
+</a></div> <a href="https://github.com/thinkingc/vuepress-docs.git" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>面试题</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/vue/" aria-current="page" class="sidebar-link">介绍</a></li><li><a href="/vue/interview-2021.html" class="sidebar-link">Vue 面试题 - 2021</a></li><li><a href="/vue/vue-set.html" aria-current="page" class="active sidebar-link">Vue.set 实现原理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vue/vue-set.html#用法" class="sidebar-link">用法</a></li><li class="sidebar-sub-header"><a href="/vue/vue-set.html#源码分析" class="sidebar-link">源码分析</a></li><li class="sidebar-sub-header"><a href="/vue/vue-set.html#总结" class="sidebar-link">总结</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="vue-set-实现原理"><a href="#vue-set-实现原理" class="header-anchor">#</a> Vue.set 实现原理</h1> <h2 id="用法"><a href="#用法" class="header-anchor">#</a> 用法</h2> <p><strong>向响应式对象中添加一个 property，并确保这个新 property 同样是响应式的，且触发视图更新</strong>。它主要用于向响应式对象上添加新 property，因为 Vue 无法探测普通的新增 property (比如 <code>this.myObject.newProperty = 'hi'</code>)</p> <blockquote><p>注意1：对象不能是 Vue 实例，或者 Vue 实例的根数据对象。<br>
+注意2：对象也可以是已有的响应式属性或普通对象。</p></blockquote> <p>参考：<br> <a href="https://cn.vuejs.org/v2/api/#Vue-set" target="_blank" rel="noopener noreferrer">Vue.set API<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a><br> <a href="https://cn.vuejs.org/v2/guide/reactivity.html#%E6%A3%80%E6%B5%8B%E5%8F%98%E5%8C%96%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9" target="_blank" rel="noopener noreferrer">深入响应式原理<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p> <h2 id="源码分析"><a href="#源码分析" class="header-anchor">#</a> 源码分析</h2> <blockquote><p>Vue.set 和 vm.$set 实现方式一致，这里讲 vm.$set。</p></blockquote> <p><strong>vm.$set() 在 new Vue() 时候就被注入到Vue的原型上。</strong><br>
+源码位置: vue/src/core/instance/index.js</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// Vue 入口文件</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> initMixin <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./init'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> stateMixin <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./state'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> renderMixin <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./render'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> eventsMixin <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./events'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> lifecycleMixin <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'./lifecycle'</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> warn <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../util/index'</span>
+
+<span class="token keyword">function</span> <span class="token function">Vue</span> <span class="token punctuation">(</span><span class="token parameter">options</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span>
+    <span class="token operator">!</span><span class="token punctuation">(</span><span class="token keyword">this</span> <span class="token keyword">instanceof</span> <span class="token class-name">Vue</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">warn</span><span class="token punctuation">(</span><span class="token string">'Vue is a constructor and should be called with the `new` keyword'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">_init</span><span class="token punctuation">(</span>options<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+<span class="token function">initMixin</span><span class="token punctuation">(</span>Vue<span class="token punctuation">)</span>
+<span class="token comment">// 给Vue原型绑定代理属性：$props, $data</span>
+<span class="token comment">// 给Vue原型绑定三个实例方法: vm.$watch，vm.$set，vm.$delete</span>
+<span class="token function">stateMixin</span><span class="token punctuation">(</span>Vue<span class="token punctuation">)</span>
+
+<span class="token comment">// 给Vue原型绑定事件相关的实例方法: vm.$on, vm.$once ,vm.$off , vm.$emit</span>
+<span class="token function">eventsMixin</span><span class="token punctuation">(</span>Vue<span class="token punctuation">)</span>
+
+<span class="token comment">// 给Vue原型绑定生命周期相关的实例方法: vm.$forceUpdate, vm.destroy, 以及私有方法_update</span>
+<span class="token function">lifecycleMixin</span><span class="token punctuation">(</span>Vue<span class="token punctuation">)</span>
+
+<span class="token comment">// 给Vue原型绑定生命周期相关的实例方法: vm.$nextTick, 以及私有方法_render, 以及一堆工具方法</span>
+<span class="token function">renderMixin</span><span class="token punctuation">(</span>Vue<span class="token punctuation">)</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> Vue
+</code></pre></div><p><strong>stateMixin()</strong></p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token operator">...</span>
+  <span class="token class-name">Vue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>$set <span class="token operator">=</span> <span class="token keyword">set</span>
+  <span class="token class-name">Vue</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span>$<span class="token keyword">delete</span> <span class="token operator">=</span> del
+<span class="token operator">...</span>
+</code></pre></div><p><strong>set()</strong><br>
+源码位置: vue/src/core/observer/index.js</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">function</span> <span class="token function">set</span> <span class="token punctuation">(</span><span class="token parameter">target<span class="token operator">:</span> Array<span class="token operator">&lt;</span>any<span class="token operator">&gt;</span> <span class="token operator">|</span> Object<span class="token punctuation">,</span> key<span class="token operator">:</span> any<span class="token punctuation">,</span> val<span class="token operator">:</span> any</span><span class="token punctuation">)</span><span class="token operator">:</span> any <span class="token punctuation">{</span>
+  <span class="token comment">// 如果 set 函数的第一个参数是 undefined 或 null 或者是原始类型值，那么在非生产环境下会打印警告信息</span>
+  <span class="token comment">// 这个api本来就是给对象与数组使用的</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span>
+    <span class="token punctuation">(</span><span class="token function">isUndef</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">isPrimitive</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">warn</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Cannot set reactive property on undefined, null, or primitive value: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token punctuation">(</span>target<span class="token operator">:</span> any<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isValidArrayIndex</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 类似$vm.set(vm.$data.arr, 0, 3)</span>
+    <span class="token comment">// 修改数组的长度, 避免索引&gt;数组长度导致splcie()执行有误</span>
+    target<span class="token punctuation">.</span>length <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span>length<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+    <span class="token comment">// 利用数组的splice变异方法触发响应式, 这个前面讲过</span>
+    target<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> val
+  <span class="token punctuation">}</span>
+  <span class="token comment">// target为对象, key在target或者target.prototype上。</span>
+  <span class="token comment">// 同时必须不能在 Object.prototype 上</span>
+  <span class="token comment">// 直接修改即可, 有兴趣可以看issue: https://github.com/vuejs/vue/issues/6845</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token keyword">in</span> target <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>key <span class="token keyword">in</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> val
+    <span class="token keyword">return</span> val
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 以上都不成立, 即开始给target创建一个全新的属性</span>
+  <span class="token comment">// 获取Observer实例</span>
+  <span class="token keyword">const</span> ob <span class="token operator">=</span> <span class="token punctuation">(</span>target<span class="token operator">:</span> any<span class="token punctuation">)</span><span class="token punctuation">.</span>__ob__
+  <span class="token comment">// Vue 实例对象拥有 _isVue 属性, 即不允许给Vue 实例对象添加属性</span>
+  <span class="token comment">// 也不允许Vue.set/$set 函数为根数据对象(vm.$data)添加属性</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>target<span class="token punctuation">.</span>_isVue <span class="token operator">||</span> <span class="token punctuation">(</span>ob <span class="token operator">&amp;&amp;</span> ob<span class="token punctuation">.</span>vmCount<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> <span class="token function">warn</span><span class="token punctuation">(</span>
+      <span class="token string">'Avoid adding reactive properties to a Vue instance or its root $data '</span> <span class="token operator">+</span>
+      <span class="token string">'at runtime - declare it upfront in the data option.'</span>
+    <span class="token punctuation">)</span>
+    <span class="token keyword">return</span> val
+  <span class="token punctuation">}</span>
+  <span class="token comment">// target本身就不是响应式数据, 直接赋值</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ob<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> val
+    <span class="token keyword">return</span> val
+  <span class="token punctuation">}</span>
+  <span class="token comment">// 进行响应式处理</span>
+  <span class="token function">defineReactive</span><span class="token punctuation">(</span>ob<span class="token punctuation">.</span>value<span class="token punctuation">,</span> key<span class="token punctuation">,</span> val<span class="token punctuation">)</span>
+  ob<span class="token punctuation">.</span>dep<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  <span class="token keyword">return</span> val
+<span class="token punctuation">}</span>
+</code></pre></div><p>接下来分析<code>set()</code>函数：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span>
+  <span class="token punctuation">(</span><span class="token function">isUndef</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token function">isPrimitive</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token function">warn</span><span class="token punctuation">(</span><span class="token template-string"><span class="token template-punctuation string">`</span><span class="token string">Cannot set reactive property on undefined, null, or primitive value: </span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span><span class="token punctuation">(</span>target<span class="token operator">:</span> any<span class="token punctuation">)</span><span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>isUndef是判断target是不是等于undefined或者null。isPrimitive是判断target的数据类型是不是string、number、symbol、boolean中的一种。这里判断的目的是：如果当前环境不是生产环境，并且 isUndef(target) || isPrimitive(target) 为真，那么就抛出错误警告。</p> <h4 id="数组的实现"><a href="#数组的实现" class="header-anchor">#</a> 数组的实现</h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isValidArrayIndex</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  target<span class="token punctuation">.</span>length <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span>length<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+  target<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> val
+<span class="token punctuation">}</span>
+</code></pre></div><p>这里实际就是修改数组时调用 <code>set</code> 方法，然后让我们能够触发响应部分的代码。不过在分析这段代码之前我们来看看vue中数组改变是如何触发视图更新的。下图分别是vue中的数组和普通的js数组：
+<img src="/assets/img/vue-array-proto.ef4a5b1d.png" alt="vue-array-proto"> <img src="/assets/img/array-proto.00ca8fbf.png" alt="array-proto">
+源码位置：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> <span class="token punctuation">{</span> def <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'../util/index'</span>
+
+<span class="token keyword">const</span> arrayProto <span class="token operator">=</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype
+<span class="token keyword">export</span> <span class="token keyword">const</span> arrayMethods <span class="token operator">=</span> Object<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span>arrayProto<span class="token punctuation">)</span>
+
+<span class="token comment">/**
+ * Intercept mutating methods and emit events
+ */</span>
+<span class="token punctuation">;</span>
+<span class="token punctuation">[</span>
+    <span class="token string">'push'</span><span class="token punctuation">,</span>
+    <span class="token string">'pop'</span><span class="token punctuation">,</span>
+    <span class="token string">'shift'</span><span class="token punctuation">,</span>
+    <span class="token string">'unshift'</span><span class="token punctuation">,</span>
+    <span class="token string">'splice'</span><span class="token punctuation">,</span>
+    <span class="token string">'sort'</span><span class="token punctuation">,</span>
+    <span class="token string">'reverse'</span>
+<span class="token punctuation">]</span>
+<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">method</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// cache original method</span>
+  <span class="token keyword">const</span> original <span class="token operator">=</span> arrayProto<span class="token punctuation">[</span>method<span class="token punctuation">]</span>
+  <span class="token function">def</span><span class="token punctuation">(</span>arrayMethods<span class="token punctuation">,</span> method<span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token function">mutator</span><span class="token punctuation">(</span><span class="token parameter"><span class="token operator">...</span>args</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">original</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> args<span class="token punctuation">)</span>
+    <span class="token keyword">const</span> ob <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>__ob__  <span class="token comment">// vm实例或组件根实例</span>
+    <span class="token keyword">let</span> inserted
+    <span class="token keyword">switch</span> <span class="token punctuation">(</span>method<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">case</span> <span class="token string">'push'</span><span class="token operator">:</span>
+      <span class="token keyword">case</span> <span class="token string">'unshift'</span><span class="token operator">:</span>
+        inserted <span class="token operator">=</span> args
+        <span class="token keyword">break</span>
+      <span class="token keyword">case</span> <span class="token string">'splice'</span><span class="token operator">:</span>
+        inserted <span class="token operator">=</span> args<span class="token punctuation">.</span><span class="token function">slice</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>inserted<span class="token punctuation">)</span> ob<span class="token punctuation">.</span><span class="token function">observeArray</span><span class="token punctuation">(</span>inserted<span class="token punctuation">)</span>
+    <span class="token comment">// notify change</span>
+    ob<span class="token punctuation">.</span>dep<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> result
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><p>但是在vue的数组中，数组原型其实不是指向Array.prototype的，而是指向一个对象（我们这里给这个对象命名为arrayMethods）。arrayMethods上面只有7个push、pop等方法，并且arrayMethods的原型才是指向的Array.prototype。所以我们在vue中调用数组的push、pop等方法时，其实不是直接调用的数组原型给我们提供的push、pop等方法，而是调用的arrayMethods给我们提供的push、pop等方法。<br>
+vue为什么要给数组的原型链上面加上这个arrayMethods呢？这里涉及到了vue的数据响应的原理，我们这篇文章暂时不谈论数据响应原理的具体实现。这里你可以理解成vue在arrayMethods对象中做过了特殊处理，如果你调用了arrayMethods提供的push、pop等7个方法，那么它会触发当前收集的依赖（这里收集的依赖可以暂时理解成渲染函数），导致页面重新渲染。换句话说，对于数组的操作，我们只有使用arrayMethods提供的那7个方法才会导致页面渲染。</p> <p>搞清楚vue中的数组具体是怎么实现了之后，我们再来看上面的代码：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token function">isValidArrayIndex</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  target<span class="token punctuation">.</span>length <span class="token operator">=</span> Math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>target<span class="token punctuation">.</span>length<span class="token punctuation">,</span> key<span class="token punctuation">)</span>
+  target<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>key<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> val<span class="token punctuation">)</span>
+  <span class="token keyword">return</span> val
+<span class="token punctuation">}</span>
+</code></pre></div><p>首先if判断当前target是不是数组，并且key的值是有效的数组索引。然后将target数组的长度设置为target.length和key中的最大值，这里为什么要这样做呢?是因为我们可能会进行下面这种骚操作：</p> <div class="language-js extra-class"><pre class="language-js"><code>arr1 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+Vue<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>arr1<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>  <span class="token comment">// 如果不那样做，这种情况就会出问题</span>
+</code></pre></div><p>接着向下看，我们发现这里直接调用了target.splice(key, 1, val)，在前面我们说过调用arrayMethods提供的push、pop等7个方法可以导致页面重新渲染，刚好splice也是属性arrayMethods提供的7个方法中的一种。<br>
+总结一下Vue.set数组实现的原理：其实Vue.set()对于数组的处理其实就是调用了splice方法，是不是发现其实很简单~~</p> <h4 id="对象的实现原理"><a href="#对象的实现原理" class="header-anchor">#</a> 对象的实现原理</h4> <p>接着看代码：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">if</span> <span class="token punctuation">(</span>key <span class="token keyword">in</span> target <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>key <span class="token keyword">in</span> <span class="token class-name">Object</span><span class="token punctuation">.</span>prototype<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> val
+  <span class="token keyword">return</span> val
+<span class="token punctuation">}</span>
+</code></pre></div><p>这里先判断如果key本来就是对象中的一个属性，并且key不是Object原型上的属性。说明这个key本来就在对象上面已经定义过了的，直接修改值就可以了，可以自动触发响应。</p> <p>关于对象的依赖收集和触发原理我们本文也不做详细解释，你可以暂时先这样理解。vue是使用的Object.defineProperty给对象做了一层拦截，当触发get的时候就会进行依赖收集（这里收集的依赖还是像数组那样，理解成渲染函数），当触发set的时候就会触发依赖，导致渲染函数执行页面重新渲染。那么第一次是在哪里触发get的呢？其实是在首次加载页面渲染的时候触发的，这里会进行递归将对象的属性都依赖收集，所以我们修改对象已有属性值得时候会导致页面重新渲染。这也刚好解释了我们使用 vueInstance.$data.obj1.b = 3; 的时候为什么页面不会重新渲染，因为这里的属性b不是对象的已有属性，也就是说属性b没有进行过依赖收集，所以才会导致修改属性b的值页面不会重新渲染。</p> <p>我们接着向下看代码：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> ob <span class="token operator">=</span> <span class="token punctuation">(</span>target<span class="token operator">:</span> any<span class="token punctuation">)</span><span class="token punctuation">.</span>__ob__
+<span class="token keyword">if</span> <span class="token punctuation">(</span>target<span class="token punctuation">.</span>_isVue <span class="token operator">||</span> <span class="token punctuation">(</span>ob <span class="token operator">&amp;&amp;</span> ob<span class="token punctuation">.</span>vmCount<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span> <span class="token operator">&amp;&amp;</span> <span class="token function">warn</span><span class="token punctuation">(</span>
+    <span class="token string">'Avoid adding reactive properties to a Vue instance or its root $data '</span> <span class="token operator">+</span>
+    <span class="token string">'at runtime - declare it upfront in the data option.'</span>
+  <span class="token punctuation">)</span>
+  <span class="token keyword">return</span> val
+<span class="token punctuation">}</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>ob<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  target<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> val
+  <span class="token keyword">return</span> val
+<span class="token punctuation">}</span>
+</code></pre></div><p>首先定义变量ob的值为 target.<strong>ob</strong>，这个__ob__属性到底是什么对象呢？vue给响应式对象都加了一个__ob__属性，如果一个对象有这个__ob__属性，那么就说明这个对象是响应式对象，我们修改对象已有属性的时候就会触发页面渲染。</p> <p>target._isVue || (ob &amp;&amp; ob.vmCount) 的意思是：当前的target对象是vue实例对象或者是根数据对象，那么就会抛出错误警告。</p> <p>if (!ob)为真说明当前的target对象不是响应式对象，那么直接赋值返回即可。</p> <p>接着向下看：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token function">defineReactive</span><span class="token punctuation">(</span>ob<span class="token punctuation">.</span>value<span class="token punctuation">,</span> key<span class="token punctuation">,</span> val<span class="token punctuation">)</span>
+ob<span class="token punctuation">.</span>dep<span class="token punctuation">.</span><span class="token function">notify</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">return</span> val
+</code></pre></div><p>这里其实才是vue.set()真正处理对象的地方。defineReactive(ob.value, key, val)的意思是给新加的属性添加依赖，以后再直接修改这个新的属性的时候就会触发页面渲染。</p> <p>ob.dep.notify()这句代码的意思是触发当前的依赖（这里的依赖依然可以理解成渲染函数），所以页面就会进行重新渲染。</p> <h2 id="总结"><a href="#总结" class="header-anchor">#</a> 总结</h2> <ul><li>如果目标是数组，使用 vue 实现的变异方法 <code>splice</code> 实现响应式</li> <li>如果目标是对象，判断属性存在，即为响应式，直接赋值</li> <li>如果 target 本身就不是响应式，直接赋值</li> <li>如果属性不是响应式，则调用 <code>defineReactive</code> 方法进行响应式处理</li></ul> <p>参考：<br> <a href="https://juejin.im/post/6844903830837002253" target="_blank" rel="noopener noreferrer">Vue源码: 关于vm.$set()内部原理<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a><br> <a href="https://www.cnblogs.com/heavenYJJ/p/9559439.html" target="_blank" rel="noopener noreferrer">从vue源码看Vue.set()和this.$set()<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/thinkingc/vuepress-docs/edit/master/docs/vue/vue-set.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">9/5/2021, 5:39:54 AM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vue/interview-2021.html" class="prev">
+        Vue 面试题 - 2021
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.665f0418.js" defer></script><script src="/assets/js/2.60e7a54a.js" defer></script><script src="/assets/js/6.d0148cec.js" defer></script>
+  </body>
+</html>
