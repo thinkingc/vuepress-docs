@@ -126,6 +126,7 @@ const sidebar = {
       children: [
         '/engineering/',
         '/engineering/eslint',
+        '/engineering/prettier',
       ]
     }
   ],
