@@ -35,3 +35,5 @@ jobs:
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           # 用户名
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          # GITHUB_TOKEN
+          SSH_GITHUB_TOKEN: ${{ secrets.SSH_GITHUB_TOKEN }}
